@@ -1,0 +1,45 @@
+[versions]
+agp = "8.10.1"
+androidGitVersion = "0.4.14"
+kotlin = "2.1.21"
+coreKtx = "1.12.0"
+androidxAnnotation = "1.1.0"
+junit = "4.13.2"
+mockitoCore = "5.12.0"
+mockitoKotlin = "5.4.0"
+robolectric = "4.16"
+appcompat = "1.6.1"
+material = "1.10.0"
+snakeYaml = "2.4"
+kotlinPoet = "2.2.0"
+kotlinxSerializationJson = "1.8.1"
+kotlinxSerializationPlugin = "2.2.0"
+spotless = "7.1.0"
+appfunctions = "1.0.0-alpha04"
+ksp = "2.1.21-2.0.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "androidxAnnotation" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+yaml-snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeYaml" }
+squareup-kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+appfunctions = { group = "androidx.appfunctions", name = "appfunctions", version.ref = "appfunctions" }
+appfunctions-service = { group = "androidx.appfunctions", name = "appfunctions-service", version.ref = "appfunctions" }
+appfunctions-compiler = { group = "androidx.appfunctions", name = "appfunctions-compiler", version.ref = "appfunctions" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerializationPlugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+spotless = { id = "com.diffplug.gradle.spotless", version.ref = "spotless" }
+# See https://github.com/gladed/gradle-android-git-version.
+android-git-version = { id = "com.gladed.androidgitversion", version.ref = "androidGitVersion" }

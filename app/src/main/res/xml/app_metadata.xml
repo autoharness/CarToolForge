@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/res-auto"
+    appfn:description="A suite of integrated tools provides granular control over the vehicle functions.
+It allows for monitoring vital information, such as fuel level and ambient temperature, or modifying the state of climate controls, lights, and doors.
+Use a single command for simple tasks, or chain them together to handle complex requests, like prepping the car for a morning drive."
+    appfn:displayDescription="Empowers AI agents to understand and control vehicle functions." />

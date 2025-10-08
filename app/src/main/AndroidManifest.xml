@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Allows the app to control the vehicle interior lights state (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_INTERIOR_LIGHTS" />
+    <!-- Allows the app to control the vehicle doors (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_DOORS" />
+    <!-- Allows the app to read the vehicle exterior environment information (normal). -->
+    <uses-permission android:name="android.car.permission.CAR_EXTERIOR_ENVIRONMENT" />
+    <!-- Allows the app to read the vehicle energy information (dangerous). -->
+    <uses-permission android:name="android.car.permission.CAR_ENERGY" />
+    <!-- Allows the app to control the vehicle EV energy information (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_ENERGY" />
+    <!-- Allows the app to read the vehicle fuel and charge port status (normal). -->
+    <uses-permission android:name="android.car.permission.CAR_ENERGY_PORTS" />
+    <!-- Allows the app to control the vehicle fuel and charge port status (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_ENERGY_PORTS" />
+    <!-- Allows the app to control the vehicle exterior lights (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_EXTERIOR_LIGHTS" />
+    <!-- Allows the app to control the vehicle glove box (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_GLOVE_BOX" />
+    <!-- Allows the app to control the vehicle HVAC (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_CLIMATE" />
+    <!-- Allows the app to read the vehicle basic information (normal). -->
+    <uses-permission android:name="android.car.permission.CAR_INFO" />
+    <!-- Allows the app to control the vehicle mirrors (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_MIRRORS" />
+    <!-- Allows the app to read the vehicle powertrain information (normal). -->
+    <uses-permission android:name="android.car.permission.CAR_POWERTRAIN" />
+    <!-- Allows the app to read the vehicle speed (dangerous). -->
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <!-- Allows the app to control the vehicle seats (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_SEATS" />
+    <!-- Allows the app to read the vehicle tire pressure information (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CAR_TIRES" />
+    <!-- Allows the app to control the vehicle windows (signature|privileged). -->
+    <uses-permission android:name="android.car.permission.CONTROL_CAR_WINDOWS" />
+    <!-- Permissions for vendor extended properties. -->
+    <uses-permission android:name="android.car.permission.CAR_VENDOR_EXTENSION" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_INFO" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_INFO" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_WINDOW" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_WINDOW" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_DOOR" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_DOOR" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_SEAT" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_SEAT" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_MIRROR" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_MIRROR" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_ENGINE" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_ENGINE" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_HVAC" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_HVAC" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_LIGHT" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_LIGHT" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_1" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_1" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_2" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_2" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_3" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_3" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_4" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_4" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_5" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_5" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_6" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_6" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_7" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_7" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_8" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_8" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_9" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_9" />
+    <uses-permission android:name="android.car.permission.GET_CAR_VENDOR_CATEGORY_10" />
+    <uses-permission android:name="android.car.permission.SET_CAR_VENDOR_CATEGORY_10" />
+
+    <uses-feature
+        android:name="android.hardware.type.automotive"
+        android:required="true" />
+
+    <application
+        android:name=".CarToolApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_app_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="false"
+        android:theme="@style/Theme.CarToolForge">
+        <property
+            android:name="android.app.appfunctions.app_metadata"
+            android:resource="@xml/app_metadata" />
+    </application>
+
+</manifest>

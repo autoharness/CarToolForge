@@ -1,0 +1,46 @@
+project.afterEvaluate {
+    tasks.register("createDeliverables") {
+        group("Release")
+        description("Creates the deliverables for the CarToolForge app.")
+
+        def outputsRoot = "../build/integration/outputs_to_release/"
+
+        android.applicationVariants.configureEach { variant ->
+            def buildTypeName = variant.buildType.name
+            def apkFileDir = "build/outputs/apk/$buildTypeName/"
+            def apkFilename = "${project.name}-${buildTypeName}.apk"
+            def sourceApkFile = file("$apkFileDir/$apkFilename")
+            if (!sourceApkFile.isFile()) {
+                logger.warn("Skip ($buildTypeName). APK not found at: ${sourceApkFile.path}")
+                return // continue
+            }
+
+            variant.outputs.each {
+                def outDirName = "cartoolforge-$buildTypeName-$versionCode-$versionName"
+                def outDirPath = outputsRoot + outDirName + "/cartoolforge"
+
+                logger.info("Start packing $outDirName")
+                mkdir outDirPath
+                copy {
+                    from "../integration/cartoolforge"
+                    into outDirPath
+                }
+                copy {
+                    from "$apkFileDir"
+                    into "$outDirPath"
+                    include "$apkFilename"
+                    rename "$apkFilename", "CarToolForge.apk"
+                }
+                copy {
+                    from "../LICENSE"
+                    into "$outDirPath"
+                }
+                ant.zip(
+                        destfile: "$outputsRoot/${outDirName}.zip",
+                        basedir: outputsRoot,
+                        includes: "${outDirName}/**"
+                )
+            }
+        }
+    }
+}
