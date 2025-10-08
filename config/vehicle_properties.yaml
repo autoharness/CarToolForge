@@ -1,0 +1,255 @@
+##
+# This file defines the allowlist of vehicle properties that can be accessed by the agent.
+#
+# Each property is described using the following fields:
+#
+#   - `name`: String
+#       Required. A unique string identifier for the property.
+#
+#   - `id`: Integer
+#       Optional. The unique integer identifier for the property. This is required
+#       for vendor extended properties.
+#
+#   - `description`: String
+#       Required. A detailed, human-readable description. It should clearly
+#       explain the property's purpose, units, and potential applications.
+#
+# Note:
+#   For [Supported System Properties](https://source.android.com/docs/automotive/vhal/system-properties),
+#   you only need to specify the `name` and `description`. The `id` is not required.
+#
+#   Example for a system property:
+#
+#     - name: "INFO_MODEL"
+#       description: "The vehicle's model name"
+#
+#   For [Vendor-Extended Properties](https://source.android.com/docs/automotive/vhal/special-properties#vendor-properties),
+#   you must provide the `id` in addition to the `name` and `description`.
+#
+#   Example for a vendor-extended property:
+#
+#     - name: "CUSTOM_PROPERTY"
+#       id: 591397123
+#       description: "A custom property for feature XYZ"
+#
+
+properties:
+  - name: "CABIN_LIGHTS_SWITCH"
+    description: |
+      Reports the current position of the physical switch that controls the cabin lights and can also be used to set the cabin light state.
+      Values:
+      - 0 (OFF): The light switch is in the "Off" position.
+      - 1 (ON): The light switch is in the "On" position.
+      - 256 (AUTOMATIC): The lights are in automatic mode.
+
+  - name: "DOOR_LOCK"
+    description: "Indicates door is locked or not"
+
+  - name: "DOOR_POS"
+    description: "Door Position: Supports integers from a minimum (closed) to a maximum (fully open) value to represent intermediate positions"
+
+  - name: "ENV_OUTSIDE_TEMPERATURE"
+    description: "Outside temperature in celsius"
+
+  - name: "EV_BATTERY_LEVEL"
+    description: "Reports the current battery level in watt-hour (Wh)"
+
+  - name: "EV_CURRENT_BATTERY_CAPACITY"
+    description: "Reports the current usable battery capacity for EV or hybrid vehicle in watt-hour (Wh)"
+
+  - name: "EV_CHARGE_PERCENT_LIMIT"
+    description: "Indicates the maximum charge percent threshold set by the user"
+
+  - name: "EV_CHARGE_PORT_OPEN"
+    description: "Indicates and controls the EV charge port on the vehicle is open or not"
+
+  - name: "EV_CHARGE_TIME_REMAINING"
+    description: "Estimated charge time remaining in seconds, reports 0 if the vehicle is not charging"
+
+  - name: "FOG_LIGHTS_SWITCH"
+    description: |
+      Gets or sets the operational state of the fog lights.
+      Values:
+      - 0 (OFF): Manually off.
+      - 1 (ON): Manually on.
+      - 2 (DAYTIME_RUNNING): DRL mode is active, fog lights are off.
+      - 256 (AUTOMATIC): Automatic sensor-based control.
+
+  - name: "FRONT_FOG_LIGHTS_SWITCH"
+    description: |
+      Gets or sets the operational state of the front fog lights.
+      Values:
+      - 0 (OFF): Manually off.
+      - 1 (ON): Manually on.
+      - 2 (DAYTIME_RUNNING): DRL mode is active, fog lights are off.
+      - 256 (AUTOMATIC): Automatic sensor-based control.
+
+  - name: "FUEL_DOOR_OPEN"
+    description: "Indicates and controls the fuel door on the vehicle is open or not"
+
+  - name: "FUEL_LEVEL"
+    description: "Reports the fuel level in milliliters"
+
+  - name: "FUEL_LEVEL_LOW"
+    description: "Indicates the low fuel warning, which turns on when the vehicle's energy (gas, battery, or both) is low"
+
+  - name: "GLOVE_BOX_DOOR_POS"
+    description: "Glove box door position: 0=closed, max=fully open"
+
+  - name: "GLOVE_BOX_LOCKED"
+    description: "Locks or unlocks the glove box"
+
+  - name: "HAZARD_LIGHTS_SWITCH"
+    description: |
+      Gets or sets the state of the hazard lights.
+      Values:
+      - 0 (OFF): The hazard lights are inactive.
+      - 1 (ON): The hazard lights are active (flashing).
+
+  - name: "HEADLIGHTS_SWITCH"
+    description: |
+      Gets or sets the state of the headlights.
+      Values:
+      - 0 (OFF): The light switch is in the "Off" position.
+      - 1 (ON): The light switch is in the "On" position.
+      - 2 (DAYTIME_RUNNING): The light switch is set to Daytime Running Lights (DRL) mode.
+      - 256 (AUTOMATIC): The lights are in automatic mode.
+
+  - name: "HVAC_AC_ON"
+    description: "Turns the vehicle's air conditioning (AC) on or off"
+
+  - name: "HVAC_AUTO_ON"
+    description: "Enables or disables automatic climate control for the HVAC system"
+
+  - name: "HVAC_DEFROSTER"
+    description: "Enables or disables window defroster"
+
+  - name: "HVAC_FAN_DIRECTION"
+    description: |
+      Gets or sets the HVAC airflow mode.
+      Values:
+      - 1 (FACE): To dashboard vents.
+      - 2 (FLOOR): To floor vents.
+      - 3 (FACE_AND_FLOOR): To dashboard and floor vents.
+      - 4 (DEFROST): To windshield vents.
+      - 6 (DEFROST_AND_FLOOR): To windshield and floor vents.
+
+  - name: "HVAC_FAN_SPEED"
+    description: "Gets or sets the HVAC fan speed"
+
+  - name: "HVAC_POWER_ON"
+    description: >
+      Controls the main power for the entire HVAC system.
+      When set to false, other related HVAC properties (e.g., fan speed, temperature) may become unavailable.
+
+  - name: "HVAC_RECIRC_ON"
+    description: "Controls whether HVAC air is drawn from outside (false) or recirculated from inside the cabin (true)"
+
+  - name: "HVAC_SEAT_TEMPERATURE"
+    description: "Controls the seat's heating and cooling level, where a higher value corresponds to a higher temperature"
+
+  - name: "HVAC_SEAT_VENTILATION"
+    description: "Gets or sets the seat's ventilation level"
+
+  - name: "HVAC_SIDE_MIRROR_HEAT"
+    description: "Gets or sets the side mirror heat level"
+
+  - name: "HVAC_STEERING_WHEEL_HEAT"
+    description: "Controls the steering wheel's heating and cooling level, where a higher value corresponds to a higher temperature"
+
+  - name: "HVAC_TEMPERATURE_CURRENT"
+    description: "Reports the current HVAC temperature in celsius"
+
+  - name: "HVAC_TEMPERATURE_SET"
+    description: "Sets the HVAC target temperature in celsius"
+
+  - name: "INFO_DRIVER_SEAT"
+    description: "Represents the driver's seat location"
+
+  - name: "INFO_EV_BATTERY_CAPACITY"
+    description: "Indicates the vehicle's total usable battery capacity in watt-hours (Wh) when new"
+
+  - name: "INFO_FUEL_CAPACITY"
+    description: "Indicates the fuel capacity of the vehicle in milliliters"
+
+  - name: "INFO_FUEL_TYPE"
+    description: |
+      Indicates the list of fuels the vehicle may use.
+      Values:
+      - 1 (UNLEADED): Unleaded gasoline.
+      - 2 (LEADED): Leaded gasoline.
+      - 3 (DIESEL_1): Diesel #1.
+      - 4 (DIESEL_2): Diesel #2.
+      - 5 (BIODIESEL): Biodiesel.
+      - 6 (E85): 85% ethanol/gasoline blend.
+      - 7 (LPG): Liquified petroleum gas.
+      - 8 (CNG): Compressed natural gas.
+      - 9 (LNG): Liquified natural gas.
+      - 10 (ELECTRIC): Electric.
+      - 11 (HYDROGEN): Hydrogen fuel cell.
+      - 12 (OTHER): Other fuel types not listed.
+
+  - name: "INFO_MAKE"
+    description: "The manufacturer of vehicle (brand name)"
+
+  - name: "INFO_MODEL"
+    description: "The vehicle's model name"
+
+  - name: "INFO_MODEL_YEAR"
+    description: "Model year of the vehicle"
+
+  - name: "MIRROR_AUTO_FOLD_ENABLED"
+    description: "Enables or disables automatic folding of the vehicle's side mirrors"
+
+  - name: "MIRROR_FOLD"
+    description: "Indicates mirror is folded or not"
+
+  - name: "PARKING_BRAKE_ON"
+    description: "Indicates the parking brake state"
+
+  - name: "PERF_VEHICLE_SPEED"
+    description: "Speed of the vehicle in m/s"
+
+  - name: "RANGE_REMAINING"
+    description: "Range remaining in meters"
+
+  - name: "READING_LIGHTS_SWITCH"
+    description: |
+      Gets or sets the current position of the switch that controls the reading lights.
+      Values:
+      - 0 (OFF): The light switch is in the "Off" position.
+      - 1 (ON): The light switch is in the "On" position.
+      - 256 (AUTOMATIC): The lights are in automatic mode.
+
+  - name: "REAR_FOG_LIGHTS_SWITCH"
+    description: |
+      Gets or sets the operational state of the rear fog lights.
+      Values:
+      - 0 (OFF): Manually off.
+      - 1 (ON): Manually on.
+      - 2 (DAYTIME_RUNNING): DRL mode is active, fog lights are off.
+      - 256 (AUTOMATIC): Automatic sensor-based control.
+
+  - name: "SEAT_FORE_AFT_POS"
+    description: |
+      Controls the fore/aft (forward/backward) position of the seat.
+      - Minimum value: The seat is in its rearmost position.
+      - Maximum value: The seat is in its foremost position.
+
+  - name: "SEAT_HEIGHT_POS"
+    description: |
+      Controls the the seat height.
+      - Minimum value: The seat is in its lowest position.
+      - Maximum value: The seat is in its highest position.
+
+  - name: "TIRE_PRESSURE"
+    description: "Tire pressure in kilopascal"
+
+  - name: "WINDOW_LOCK"
+    description: "Indicates window child lock is locked or not"
+
+  - name: "WINDOW_POS"
+    description: |
+      Controls the window position.
+      - Minimum value: The window is fully closed.
+      - Maximum value: The window is fully open.

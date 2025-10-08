@@ -1,0 +1,33 @@
+apply plugin: 'com.diffplug.spotless'
+
+spotless {
+    kotlin {
+        target '**/*.kt'
+        targetExclude 'build/**'
+        ktlint().editorConfigOverride([
+                'ij_kotlin_allow_trailing_comma'             : 'true',
+                'ij_kotlin_allow_trailing_comma_on_call_site': 'true'
+        ])
+        trimTrailingWhitespace()
+        leadingTabsToSpaces()
+        endWithNewline()
+        licenseHeaderFile('../gradle/license-header.txt')
+    }
+
+    kotlinGradle {
+        target '*.kts'
+        ktlint()
+        trimTrailingWhitespace()
+        leadingTabsToSpaces()
+        endWithNewline()
+    }
+
+    java {
+        target '**/*.java'
+        targetExclude 'build/**'
+        googleJavaFormat()
+        trimTrailingWhitespace()
+        leadingTabsToSpaces()
+        endWithNewline()
+    }
+}

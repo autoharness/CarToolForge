@@ -1,0 +1,47 @@
+package {
+    default_applicable_licenses: ["cartoolforge_license"],
+}
+
+license {
+    name: "cartoolforge_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-MIT"],
+    license_text: ["LICENSE"],
+}
+
+prebuilt_etc {
+    name: "allowed_privapp_permissions_cartoolforge",
+    sub_dir: "permissions",
+    src: "etc/permissions/privapp-permissions-cartoolforge.xml",
+    filename_from_src: true,
+}
+
+prebuilt_etc {
+    name: "sysconfig_cartoolforge",
+    src: "etc/sysconfig/system-config-cartoolforge.xml",
+    sub_dir: "sysconfig",
+    filename_from_src: true,
+}
+
+prebuilt_etc {
+    name: "default_permissions_cartoolforge",
+    sub_dir: "default-permissions",
+    src: "etc/default-permissions/default-permissions-cartoolforge.xml",
+    filename_from_src: true,
+}
+
+android_app_import {
+    name: "CarToolForgePrebuilt",
+    apk: "CarToolForge.apk",
+    privileged: true,
+    presigned: true,
+    preprocessed: true,
+    dex_preopt: {
+      enabled: false,
+    },
+    required: [
+        "allowed_privapp_permissions_cartoolforge",
+        "sysconfig_cartoolforge",
+        "default_permissions_cartoolforge",
+    ],
+}

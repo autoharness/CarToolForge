@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) The CarToolForge Authors.
+  All rights reserved.
+-->
+<permissions>
+    <privapp-permissions package="org.autoharness.cartool">
+        <permission name="android.car.permission.CONTROL_CAR_INTERIOR_LIGHTS" />
+        <permission name="android.car.permission.CONTROL_CAR_DOORS" />
+        <permission name="android.car.permission.CONTROL_CAR_ENERGY" />
+        <permission name="android.car.permission.CONTROL_CAR_ENERGY_PORTS" />
+        <permission name="android.car.permission.CONTROL_CAR_EXTERIOR_LIGHTS" />
+        <permission name="android.car.permission.CONTROL_GLOVE_BOX" />
+        <permission name="android.car.permission.CONTROL_CAR_CLIMATE" />
+        <permission name="android.car.permission.CONTROL_CAR_MIRRORS" />
+        <permission name="android.car.permission.CONTROL_CAR_SEATS" />
+        <permission name="android.car.permission.CAR_TIRES" />
+        <permission name="android.car.permission.CONTROL_CAR_WINDOWS" />
+        <permission name="android.car.permission.CAR_VENDOR_EXTENSION" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_INFO" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_INFO" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_WINDOW" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_WINDOW" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_DOOR" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_DOOR" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_SEAT" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_SEAT" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_MIRROR" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_MIRROR" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_ENGINE" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_ENGINE" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_HVAC" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_HVAC" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_LIGHT" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_LIGHT" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_1" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_1" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_2" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_2" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_3" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_3" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_4" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_4" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_5" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_5" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_6" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_6" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_7" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_7" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_8" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_8" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_9" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_9" />
+        <permission name="android.car.permission.GET_CAR_VENDOR_CATEGORY_10" />
+        <permission name="android.car.permission.SET_CAR_VENDOR_CATEGORY_10" />
+    </privapp-permissions>
+</permissions>

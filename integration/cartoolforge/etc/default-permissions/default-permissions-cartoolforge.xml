@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<!--
+  Copyright (c) The CarToolForge Authors.
+  All rights reserved.
+-->
+<exceptions>
+    <exception package="org.autoharness.cartool">
+        <permission name="android.car.permission.CAR_ENERGY" fixed="false" />
+        <permission name="android.car.permission.CAR_SPEED" fixed="false" />
+    </exception>
+</exceptions>

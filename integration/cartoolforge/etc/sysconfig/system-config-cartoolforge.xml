@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) The CarToolForge Authors.
+  All rights reserved.
+-->
+<config>
+    <install-in-user-type package="org.autoharness.cartool">
+        <install-in user-type="FULL" />
+        <do-not-install-in user-type="SYSTEM" />
+    </install-in-user-type>
+</config>
