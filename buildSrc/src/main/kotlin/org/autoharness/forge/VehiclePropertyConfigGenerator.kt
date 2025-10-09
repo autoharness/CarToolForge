@@ -31,7 +31,7 @@ object VehiclePropertyConfigGenerator {
     private const val KEY_LIST_PROPERTIES = "properties"
     private const val KEY_PROPERTY_NAME = "name"
     private const val KEY_PROPERTY_DESCRIPTION = "description"
-    private const val KEY_PROPERTY_ID = "id"
+    private const val  KEY_PROPERTY_ID = "id"
 
     // A private data class to safely hold parsed config data.
     private data class PropertyDefinition(val name: String, val description: String, val id: Int?)
