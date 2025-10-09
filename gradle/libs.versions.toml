@@ -15,8 +15,9 @@ kotlinPoet = "2.2.0"
 kotlinxSerializationJson = "1.8.1"
 kotlinxSerializationPlugin = "2.2.0"
 spotless = "7.1.0"
-appfunctions = "1.0.0-alpha04"
+appfunctions = "1.0.0-alpha05"
 ksp = "2.1.21-2.0.1"
+guavaAndroid = "33.4.8-android"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 appfunctions = { group = "androidx.appfunctions", name = "appfunctions", version.ref = "appfunctions" }
 appfunctions-service = { group = "androidx.appfunctions", name = "appfunctions-service", version.ref = "appfunctions" }
 appfunctions-compiler = { group = "androidx.appfunctions", name = "appfunctions-compiler", version.ref = "appfunctions" }
+guava-android = { group = "com.google.guava", name = "guava", version.ref = "guavaAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
