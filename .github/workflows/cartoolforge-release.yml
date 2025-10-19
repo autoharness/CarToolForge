@@ -1,0 +1,54 @@
+name: "CarToolForge Release Pipeline"
+
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "Setup Java"
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 21
+
+      - name: "Setup Gradle"
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Decode keystore
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.CARTOOLFORGE_RELEASE_KEYSTORE }}
+        run: |
+          echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > $GITHUB_WORKSPACE/keystore/release.keystore
+
+      - name: Decode keystore properties
+        env:
+          RELEASE_PROPERTIES_BASE64: ${{ secrets.CARTOOLFORGE_RELEASE_PROPERTIES }}
+        run: |
+          echo $RELEASE_PROPERTIES_BASE64 | base64 --decode > $GITHUB_WORKSPACE/keystore/release.properties
+
+      - name: "Build application"
+        run: ./gradlew clean build --info --no-daemon
+
+      - name: "Create deliverables"
+        run: ./gradlew createDeliverables --info --no-daemon
+
+      - name: "Create GitHub Release"
+        run: |
+          chmod +x .github/workflows/scripts/create-github-release.sh
+          .github/workflows/scripts/create-github-release.sh ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
