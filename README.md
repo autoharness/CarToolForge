@@ -20,9 +20,9 @@ You can build the project using Gradle:
 
 ### Prerequisites
 
-As of [android-16.0.0_r2](https://source.android.com/docs/setup/reference/build-numbers#source-code-tags-and-builds), **App Functions** is an experimental feature and may be disabled by default in your system.
+**App Functions** is enabled by default starting with [android-16.0.0_r4](https://source.android.com/docs/setup/reference/build-numbers#source-code-tags-and-builds). However, on earlier versions of Android 16, this is considered an experimental feature and may be disabled by default in your system.
 
-You can check whether the essential feature flags are enabled on your device or emulator using the following command：
+You can check whether the essential feature flags are enabled on your device or emulator using the following command:
 
 ```
 adb shell aflags list | grep "enable_app_functions_schema_parser"
@@ -30,25 +30,10 @@ adb shell aflags list | grep "enable_app_functions_schema_parser"
 
 If this flag is not enabled, you need to enable them in your AOSP build. For detailed instructions, refer to the official guide on [Set feature launch flag values](https://source.android.com/docs/setup/build/feature-flagging/set-values).
 
-> [!NOTE]
+> [!TIP]
 >
-> You will likely need to enable both `enable_app_functions` and `enable_app_functions_schema_parser`. For example：
+> You can manually backport the necessary configuration by referencing the [textproto](https://android.googlesource.com/platform/build/release/+/refs/tags/android-16.0.0_r4/aconfig/bp4a/com.android.appsearch.flags/enable_app_functions_schema_parser_flag_values.textproto) values from the `android-16.0.0_r4` tag.
 >
-> ```
-> flag_value {
->      package: "com.android.appsearch.flags"
->      name: "enable_app_functions_schema_parser"
->      state: ENABLED
->      permission: READ_ONLY
-> }
->
-> flag_value {
->      package: "com.android.appsearch.flags"
->      name: "enable_app_functions"
->      state: ENABLED
->      permission: READ_ONLY
-> }
-> ```
 
 ### System Pre-installation
 
