@@ -436,29 +436,22 @@ class CarPropertyRepositoryTest {
         }
         // Validate all fields using hardcoded values for consistency with the API description.
         // Access.
-        assertEquals(1, profiles[0].access)
-        assertEquals(2, profiles[1].access)
-        assertEquals(3, profiles[2].access)
+        assertEquals("ReadOnly", profiles[0].access)
+        assertEquals("WriteOnly", profiles[1].access)
+        assertEquals("ReadWrite", profiles[2].access)
         // Data type.
-        assertEquals(2, profiles[3].dataType)
-        assertEquals(7, profiles[4].dataType)
-        assertEquals(3, profiles[5].dataType)
-        assertEquals(5, profiles[6].dataType)
-        assertEquals(8, profiles[7].dataType)
-        assertEquals(4, profiles[8].dataType)
-        assertEquals(6, profiles[9].dataType)
-        assertEquals(1, profiles[10].dataType)
+        assertEquals("Boolean", profiles[3].dataType)
+        assertEquals("Float", profiles[4].dataType)
+        assertEquals("Integer", profiles[5].dataType)
+        assertEquals("Long", profiles[6].dataType)
+        assertEquals("FloatArray", profiles[7].dataType)
+        assertEquals("IntArray", profiles[8].dataType)
+        assertEquals("LongArray", profiles[9].dataType)
+        assertEquals("String", profiles[10].dataType)
         // Change mode.
-        assertEquals(0, profiles[11].changeMode)
-        assertEquals(1, profiles[12].changeMode)
-        assertEquals(2, profiles[13].changeMode)
-        // Area type.
-        assertEquals(0, profiles[14].areaType)
-        assertEquals(2, profiles[15].areaType)
-        assertEquals(3, profiles[16].areaType)
-        assertEquals(4, profiles[17].areaType)
-        assertEquals(5, profiles[18].areaType)
-        assertEquals(6, profiles[19].areaType)
+        assertEquals("Static", profiles[11].changeMode)
+        assertEquals("OnChange", profiles[12].changeMode)
+        assertEquals("Continuous", profiles[13].changeMode)
         // Area id.
         assertEquals(1, profiles[20].areaIdProfiles[0].areaId)
         assertTrue(profiles[20].areaIdProfiles[0].areaIdDescription.endsWith("front windshield."))
