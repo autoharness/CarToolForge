@@ -20,11 +20,11 @@ data class CarPropertyProfile(
     /** A specific description of what the property represents. */
     val propertyDescription: String,
     /** @see android.car.hardware.CarPropertyConfig.getAccess */
-    val access: Int,
+    val access: String,
     /** @see android.car.hardware.CarPropertyConfig.getPropertyType */
-    val dataType: Int,
+    val dataType: String,
     /** @see android.car.hardware.CarPropertyConfig.getChangeMode */
-    val changeMode: Int,
+    val changeMode: String,
     /** @see android.car.hardware.CarPropertyConfig.getAreaType */
     val areaType: Int,
     /** @see android.car.hardware.CarPropertyConfig.getAreaIdConfigs */

@@ -21,9 +21,9 @@ import org.autoharness.cartool.property.Constants.AREA_DECODER_MAP
 import org.autoharness.cartool.property.Constants.AREA_ID_MASKS
 import org.autoharness.cartool.property.Constants.AREA_SPECIFIC_DESCRIPTION_TEMPLATE
 import org.autoharness.cartool.property.Constants.GLOBAL_AREA_DESCRIPTION
-import org.autoharness.cartool.property.Constants.SUPPORTED_ACCESS_VALUES
+import org.autoharness.cartool.property.Constants.SUPPORTED_ACCESS_TYPE_MAP
 import org.autoharness.cartool.property.Constants.SUPPORTED_AREA_TYPES
-import org.autoharness.cartool.property.Constants.SUPPORTED_CHANGE_MODES
+import org.autoharness.cartool.property.Constants.SUPPORTED_CHANGE_MODE_MAP
 import org.autoharness.cartool.property.Constants.SUPPORTED_DATA_TYPE_MAP
 import org.autoharness.cartool.property.data.AreaIdProfile
 import org.autoharness.cartool.property.data.CarPropertyProfile
@@ -159,9 +159,9 @@ class CarPropertyRepository(
             CarPropertyProfile(
                 propertyName = allowedConfig.name,
                 propertyDescription = allowedConfig.description,
-                access = access,
+                access = toAccessType(access),
                 dataType = toDataType(propertyType),
-                changeMode = changeMode,
+                changeMode = toChangeMode(changeMode),
                 areaType = areaType,
                 areaIdProfiles = constructAreaProfile(this),
             )
@@ -194,11 +194,11 @@ class CarPropertyRepository(
         }
     }
 
-    private fun verifyAccessValue(access: Int): Boolean = access in SUPPORTED_ACCESS_VALUES
+    private fun verifyAccessValue(access: Int): Boolean = access in SUPPORTED_ACCESS_TYPE_MAP.keys
 
     private fun verifyAreaTypeValue(areaType: Int): Boolean = areaType in SUPPORTED_AREA_TYPES
 
-    private fun verifyChangeMode(changeMode: Int): Boolean = changeMode in SUPPORTED_CHANGE_MODES
+    private fun verifyChangeMode(changeMode: Int): Boolean = changeMode in SUPPORTED_CHANGE_MODE_MAP.keys
 
     private fun verifyDataType(dataType: Class<*>) = dataType in SUPPORTED_DATA_TYPE_MAP.keys
 
@@ -212,8 +212,14 @@ class CarPropertyRepository(
         else -> strongThrow("Unsupported area type: $areaType")
     }
 
-    private fun toDataType(clazz: Class<*>): Int = SUPPORTED_DATA_TYPE_MAP[clazz]
+    private fun toDataType(clazz: Class<*>): String = SUPPORTED_DATA_TYPE_MAP[clazz]
         ?: strongThrow("Unsupported class type: ${clazz.name}")
+
+    private fun toAccessType(access: Int): String = SUPPORTED_ACCESS_TYPE_MAP[access]
+        ?: strongThrow("Unsupported access type: $access")
+
+    private fun toChangeMode(changeMode: Int): String = SUPPORTED_CHANGE_MODE_MAP[changeMode]
+        ?: strongThrow("Unsupported change mode: $changeMode")
 
     private fun constructAreaProfile(carPropertyConfig: CarPropertyConfig<*>): List<AreaIdProfile> = carPropertyConfig.areaIdConfigs.map { areaIdConfig ->
         toAreaIdProfile(carPropertyConfig.areaType, areaIdConfig)

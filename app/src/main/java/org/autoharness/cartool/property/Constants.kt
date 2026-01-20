@@ -13,18 +13,17 @@ import android.car.VehicleAreaSeat
 import android.car.VehicleAreaType
 import android.car.VehicleAreaWheel
 import android.car.VehicleAreaWindow
-import android.car.VehiclePropertyType
 import android.car.hardware.CarPropertyConfig
 
 /**
  * Defines constants used for vehicle property configurations.
  */
 object Constants {
-    /** A set of supported vehicle property access types. */
-    val SUPPORTED_ACCESS_VALUES = setOf(
-        CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ,
-        CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_WRITE,
-        CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ_WRITE,
+    /** A map of supported vehicle property access types. */
+    val SUPPORTED_ACCESS_TYPE_MAP: Map<Int, String> = mapOf(
+        CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ to "ReadOnly",
+        CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_WRITE to "WriteOnly",
+        CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ_WRITE to "ReadWrite",
     )
 
     /** A set of supported vehicle area types. */
@@ -37,23 +36,23 @@ object Constants {
         VehicleAreaType.VEHICLE_AREA_TYPE_WHEEL,
     )
 
-    /** A set of supported vehicle property change modes. */
-    val SUPPORTED_CHANGE_MODES = setOf(
-        CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_STATIC,
-        CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_ONCHANGE,
-        CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_CONTINUOUS,
+    /** A map of supported vehicle property change modes. */
+    val SUPPORTED_CHANGE_MODE_MAP: Map<Int, String> = mapOf(
+        CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_STATIC to "Static",
+        CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_ONCHANGE to "OnChange",
+        CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_CONTINUOUS to "Continuous",
     )
 
     /** A map of supported data types to their corresponding vehicle property types. */
-    val SUPPORTED_DATA_TYPE_MAP: Map<Class<*>, Int> = mapOf(
-        java.lang.Boolean::class.java to VehiclePropertyType.BOOLEAN,
-        java.lang.Float::class.java to VehiclePropertyType.FLOAT,
-        java.lang.Integer::class.java to VehiclePropertyType.INT32,
-        java.lang.Long::class.java to VehiclePropertyType.INT64,
-        Array<Float>::class.java to VehiclePropertyType.FLOAT_VEC,
-        Array<Int>::class.java to VehiclePropertyType.INT32_VEC,
-        Array<Long>::class.java to VehiclePropertyType.INT64_VEC,
-        java.lang.String::class.java to VehiclePropertyType.STRING,
+    val SUPPORTED_DATA_TYPE_MAP: Map<Class<*>, String> = mapOf(
+        java.lang.Boolean::class.java to "Boolean",
+        java.lang.Float::class.java to "Float",
+        java.lang.Integer::class.java to "Integer",
+        java.lang.Long::class.java to "Long",
+        Array<Float>::class.java to "FloatArray",
+        Array<Int>::class.java to "IntArray",
+        Array<Long>::class.java to "LongArray",
+        java.lang.String::class.java to "String",
     )
 
     /** A bitmask representing all window areas. */
