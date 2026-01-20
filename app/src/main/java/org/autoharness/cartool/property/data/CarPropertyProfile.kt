@@ -25,8 +25,6 @@ data class CarPropertyProfile(
     val dataType: String,
     /** @see android.car.hardware.CarPropertyConfig.getChangeMode */
     val changeMode: String,
-    /** @see android.car.hardware.CarPropertyConfig.getAreaType */
-    val areaType: Int,
     /** @see android.car.hardware.CarPropertyConfig.getAreaIdConfigs */
     val areaIdProfiles: List<AreaIdProfile>,
 )

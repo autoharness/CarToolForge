@@ -162,7 +162,6 @@ class CarPropertyRepository(
                 access = toAccessType(access),
                 dataType = toDataType(propertyType),
                 changeMode = toChangeMode(changeMode),
-                areaType = areaType,
                 areaIdProfiles = constructAreaProfile(this),
             )
         }

@@ -452,13 +452,6 @@ class CarPropertyRepositoryTest {
         assertEquals("Static", profiles[11].changeMode)
         assertEquals("OnChange", profiles[12].changeMode)
         assertEquals("Continuous", profiles[13].changeMode)
-        // Area type.
-        assertEquals(0, profiles[14].areaType)
-        assertEquals(2, profiles[15].areaType)
-        assertEquals(3, profiles[16].areaType)
-        assertEquals(4, profiles[17].areaType)
-        assertEquals(5, profiles[18].areaType)
-        assertEquals(6, profiles[19].areaType)
         // Area id.
         assertEquals(1, profiles[20].areaIdProfiles[0].areaId)
         assertTrue(profiles[20].areaIdProfiles[0].areaIdDescription.endsWith("front windshield."))
