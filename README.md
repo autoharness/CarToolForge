@@ -78,8 +78,13 @@ For security, **CarToolForge** uses an allowlist to control the agent's access t
    - [`BYTES`](https://android.googlesource.com/platform/packages/services/Car/+/refs/heads/android16-release/car-lib/src/android/car/VehiclePropertyType.java#39) and [`MIXED`](https://android.googlesource.com/platform/packages/services/Car/+/refs/heads/android16-release/car-lib/src/android/car/VehiclePropertyType.java#40) property data types.
    - [VEHICLE_AREA_TYPE_VENDOR](https://developer.android.com/reference/android/car/VehicleAreaType#VEHICLE_AREA_TYPE_VENDOR) area type.
 
-2. **Model Requirements:**  Achieving good results with the current function complexity requires a model with excellent reasoning capabilities and a large parameter size (>20B). Further work is required to explore potential avenues for optimization.
+2. **Model Requirements:**  Achieving good results with the current function complexity requires a model with excellent reasoning capabilities and a large parameter size (>20B).
+
+> [!TIP]
+>
+> **Optimization:** To enable efficient on-device execution with smaller models, consider fine-tuning on the [CarTool-Instruct Dataset](https://huggingface.co/datasets/autoharness/CarTool-Instruct).
 
 ## Contributing
 
 Take a look at the [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
