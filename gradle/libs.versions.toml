@@ -15,7 +15,7 @@ kotlinPoet = "2.2.0"
 kotlinxSerializationJson = "1.8.1"
 kotlinxSerializationPlugin = "2.2.0"
 spotless = "7.1.0"
-appfunctions = "1.0.0-alpha07"
+appfunctions = "1.0.0-alpha08"
 ksp = "2.1.21-2.0.1"
 guavaAndroid = "33.4.8-android"
 
