@@ -52,7 +52,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      *
      * @return A JSON string representing a list of property profiles for supported vehicle properties.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getPropertyList(appFunctionContext: AppFunctionContext): String = repository.getPropertyList()
 
     /**
@@ -62,7 +62,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current string value, or an empty string if the property value is null.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getStringProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -76,7 +76,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new string value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setStringProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -94,7 +94,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current boolean value of the property.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getBooleanProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -108,7 +108,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new boolean value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setBooleanProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -126,7 +126,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current integer value of the property.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getIntProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -140,7 +140,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new integer value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setIntProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -158,7 +158,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current integer array value of the property.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getIntArrayProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -172,7 +172,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new integer array value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setIntArrayProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -190,7 +190,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current long value, or 0L if the property value is null.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getLongProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -204,7 +204,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new long value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setLongProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -222,7 +222,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current long array, or an empty array if the property value is null.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getLongArrayProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -236,7 +236,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new long array value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setLongArrayProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -254,7 +254,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current float value of the property.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getFloatProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -268,7 +268,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new float value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setFloatProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -286,7 +286,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to read.
      * @return The current float array, or an empty array if the property value is null.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun getFloatArrayProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
@@ -300,7 +300,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * @param areaId The specific area ID of the property to modify.
      * @param value The new float array value to set.
      */
-    @AppFunction(isDescribedByKdoc = true)
+    @AppFunction(isDescribedByKDoc = true)
     override fun setFloatArrayProperty(
         appFunctionContext: AppFunctionContext,
         propertyName: String,
