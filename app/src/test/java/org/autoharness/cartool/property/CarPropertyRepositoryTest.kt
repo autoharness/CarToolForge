@@ -414,6 +414,7 @@ class CarPropertyRepositoryTest {
         val allowedProperties = testConfigs.associate {
             it.propertyId to VehiclePropertyConfig.Property(
                 name = "PROPERTY_NAME_${it.propertyId}",
+                categories = listOf("BODY_CONTROL"),
                 description = "A description for property ${it.propertyId}",
                 id = it.propertyId,
             )
@@ -422,7 +423,7 @@ class CarPropertyRepositoryTest {
         whenever(mockCarPropertyManager.getPropertyList(any())).thenReturn(testConfigs)
         carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
         // Run test.
-        val resultJson = carPropertyRepository.getPropertyList()
+        val resultJson = carPropertyRepository.getPropertyList("ALL_CATEGORIES")
         val profiles = Json.decodeFromString<List<CarPropertyProfile>>(resultJson)
         assertEquals(testConfigs.size, profiles.size)
         profiles.forEachIndexed { index, profile ->
@@ -607,6 +608,7 @@ class CarPropertyRepositoryTest {
         val allowedProperties = incompatibleConfigs.associate {
             it.propertyId to VehiclePropertyConfig.Property(
                 name = "INCOMPATIBLE_PROP_${it.propertyId}",
+                categories = listOf("ENERGY_MANAGEMENT"),
                 description = "Description for incompatible property ${it.propertyId}",
                 id = it.propertyId,
             )
@@ -617,7 +619,7 @@ class CarPropertyRepositoryTest {
         carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
 
         // Run test.
-        val resultJson = carPropertyRepository.getPropertyList()
+        val resultJson = carPropertyRepository.getPropertyList("ALL_CATEGORIES")
         // Assert that all incompatible properties were filtered out.
         assertEquals("[]", resultJson)
     }
@@ -627,7 +629,7 @@ class CarPropertyRepositoryTest {
         val testAreaId = 1
         val testPropId = 201
         val testPropName = "TEST_PROPERTY"
-        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, description = "")
+        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, categories = listOf("HVAC_SYSTEM"), description = "")
         val allowedProperties = mapOf(testPropId to testProperty)
         val mockCarPropertyManager: CarPropertyManager = mock()
         carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
@@ -651,7 +653,7 @@ class CarPropertyRepositoryTest {
         val testAreaId = 1
         val testPropId = 201
         val testPropName = "TEST_PROPERTY"
-        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, description = "")
+        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, categories = listOf("LIGHTING_SYSTEM"), description = "")
         val allowedProperties = mapOf(testPropId to testProperty)
         val mockCarPropertyManager: CarPropertyManager = mock()
         carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
@@ -699,7 +701,7 @@ class CarPropertyRepositoryTest {
         val testAreaId = 1
         val testPropId = 201
         val testPropName = "TEST_PROPERTY"
-        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, description = "")
+        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, categories = listOf("VEHICLE_INFO"), description = "")
         val allowedProperties = mapOf(testPropId to testProperty)
         val mockCarPropertyManager: CarPropertyManager = mock()
         carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
@@ -732,7 +734,7 @@ class CarPropertyRepositoryTest {
         val testAreaId = 1
         val testPropId = 201
         val testPropName = "TEST_PROPERTY"
-        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, description = "")
+        val testProperty = VehiclePropertyConfig.Property(id = testPropId, name = testPropName, categories = listOf("HVAC_SYSTEM"), description = "")
         val allowedProperties = mapOf(testPropId to testProperty)
         val mockCarPropertyManager: CarPropertyManager = mock()
         carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
@@ -787,6 +789,97 @@ class CarPropertyRepositoryTest {
                 assertTrue(e.message!!.contains("does not exist or is not authorized"))
             }
         }
+    }
+
+    @Test
+    fun `getPropertyList with specific category filters correctly`() {
+        val propIdBody = 1
+        val propIdHvac = 2
+        val propIdBoth = 3
+        val propIdNone = 4
+
+        val configBody = mockConfig(
+            propertyId = propIdBody,
+            access = CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ,
+            propertyType = java.lang.Boolean::class.java,
+            changeMode = CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_STATIC,
+            areaType = VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,
+            areaIdConfigs = listOf(mockAreaIdConfig(0)),
+        )
+        val configHvac = mockConfig(
+            propertyId = propIdHvac,
+            access = CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ,
+            propertyType = java.lang.Boolean::class.java,
+            changeMode = CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_STATIC,
+            areaType = VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,
+            areaIdConfigs = listOf(mockAreaIdConfig(0)),
+        )
+        val configBoth = mockConfig(
+            propertyId = propIdBoth,
+            access = CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ,
+            propertyType = java.lang.Boolean::class.java,
+            changeMode = CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_STATIC,
+            areaType = VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,
+            areaIdConfigs = listOf(mockAreaIdConfig(0)),
+        )
+        val configNone = mockConfig(
+            propertyId = propIdNone,
+            access = CarPropertyConfig.VEHICLE_PROPERTY_ACCESS_READ,
+            propertyType = java.lang.Boolean::class.java,
+            changeMode = CarPropertyConfig.VEHICLE_PROPERTY_CHANGE_MODE_STATIC,
+            areaType = VehicleAreaType.VEHICLE_AREA_TYPE_GLOBAL,
+            areaIdConfigs = listOf(mockAreaIdConfig(0)),
+        )
+
+        val allowedProperties = mapOf(
+            propIdBody to VehiclePropertyConfig.Property(
+                name = "BODY_PROP",
+                categories = listOf("BODY_CONTROL"),
+                description = "desc",
+                id = propIdBody,
+            ),
+            propIdHvac to VehiclePropertyConfig.Property(
+                name = "HVAC_PROP",
+                categories = listOf("HVAC_SYSTEM"),
+                description = "desc",
+                id = propIdHvac,
+            ),
+            propIdBoth to VehiclePropertyConfig.Property(
+                name = "BOTH_PROP",
+                categories = listOf("BODY_CONTROL", "HVAC_SYSTEM"),
+                description = "desc",
+                id = propIdBoth,
+            ),
+            propIdNone to VehiclePropertyConfig.Property(
+                name = "NONE_PROP",
+                categories = listOf("ENERGY_MANAGEMENT"),
+                description = "desc",
+                id = propIdNone,
+            ),
+        )
+
+        val mockCarPropertyManager: CarPropertyManager = mock()
+        // When getPropertyList is called with any set, it returns all configs by default,
+        // but the repository should only pass the filtered IDs to it.
+        whenever(mockCarPropertyManager.getPropertyList(any())).thenAnswer { invocation ->
+            val requestedIds = invocation.getArgument<Set<Int>>(0)
+            listOf(configBody, configHvac, configBoth, configNone).filter { it.propertyId in requestedIds }
+        }
+
+        carPropertyRepository = CarPropertyRepository(mockCarPropertyManager, allowedProperties)
+
+        val bodyResult = Json.decodeFromString<List<CarPropertyProfile>>(carPropertyRepository.getPropertyList("BODY_CONTROL"))
+        assertEquals(2, bodyResult.size)
+        assertTrue(bodyResult.any { it.propertyName == "BODY_PROP" })
+        assertTrue(bodyResult.any { it.propertyName == "BOTH_PROP" })
+
+        val hvacResult = Json.decodeFromString<List<CarPropertyProfile>>(carPropertyRepository.getPropertyList("HVAC_SYSTEM"))
+        assertEquals(2, hvacResult.size)
+        assertTrue(hvacResult.any { it.propertyName == "HVAC_PROP" })
+        assertTrue(hvacResult.any { it.propertyName == "BOTH_PROP" })
+
+        val allResult = Json.decodeFromString<List<CarPropertyProfile>>(carPropertyRepository.getPropertyList("ALL_CATEGORIES"))
+        assertEquals(4, allResult.size)
     }
 
     /**

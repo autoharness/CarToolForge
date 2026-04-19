@@ -8,6 +8,7 @@
 package org.autoharness.cartool.property
 
 import androidx.appfunctions.AppFunctionContext
+import androidx.appfunctions.AppFunctionStringValueConstraint
 import androidx.appfunctions.service.AppFunction
 
 class CarPropertyFunctions(private val repository: CarPropertyRepository) :
@@ -50,10 +51,32 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      * | `areaIdProfiles[].maxValue`            | Number           | The maximum allowed value for this property in this specific area. Empty value indicates no minimum is enforced. |
      * | `areaIdProfiles[].supportedEnumValues` | Array            | A list of specific enumeration values that are supported for this property in this area. An empty array suggests it's not an enum. |
      *
+     * @param category The category of vehicle properties to retrieve. Supported values include:
+     * - `ALL_CATEGORIES`: Returns all allowed vehicle properties.
+     * - `BODY_CONTROL`: Properties related to doors, windows, mirrors, etc.
+     * - `HVAC_SYSTEM`: Properties related to climate control and thermal regulation.
+     * - `ENERGY_MANAGEMENT`: Properties related to battery, fuel, and charging.
+     * - `CHASSIS_AND_DYNAMICS`: Properties related to vehicle movement and status.
+     * - `LIGHTING_SYSTEM`: Properties related to interior and exterior illumination.
+     * - `VEHICLE_INFO`: Static identity and hardware specifications.
      * @return A JSON string representing a list of property profiles for supported vehicle properties.
      */
     @AppFunction(isDescribedByKDoc = true)
-    override fun getPropertyList(appFunctionContext: AppFunctionContext): String = repository.getPropertyList()
+    override fun getPropertyList(
+        appFunctionContext: AppFunctionContext,
+        @AppFunctionStringValueConstraint(
+            enumValues = [
+                "ALL_CATEGORIES",
+                "BODY_CONTROL",
+                "HVAC_SYSTEM",
+                "ENERGY_MANAGEMENT",
+                "CHASSIS_AND_DYNAMICS",
+                "LIGHTING_SYSTEM",
+                "VEHICLE_INFO",
+            ],
+        )
+        category: String,
+    ): String = repository.getPropertyList(category)
 
     /**
      * Gets the current value of a string type vehicle property.
