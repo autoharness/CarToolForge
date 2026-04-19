@@ -14,7 +14,10 @@ const val RESULT_SUCCESS = "success"
 
 @AppFunctionSchemaDefinition(name = "getPropertyList", version = 1, category = "car-property-full")
 interface GetPropertyList {
-    fun getPropertyList(appFunctionContext: AppFunctionContext): String
+    fun getPropertyList(
+        appFunctionContext: AppFunctionContext,
+        category: String = "ALL_CATEGORIES",
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "getStringProperty", version = 1, category = "car-property-full")

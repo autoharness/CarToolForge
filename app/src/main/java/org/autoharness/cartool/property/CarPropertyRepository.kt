@@ -42,8 +42,13 @@ class CarPropertyRepository(
 
     private val propertyIdByName: Map<String, Int> = allowedProperties.values.associate { it.name to it.id }
 
-    fun getPropertyList(): String {
-        val allowedPropertyIds = ArraySet(allowedProperties.keys)
+    fun getPropertyList(category: String): String {
+        val allowedPropertyIds = if (category == "ALL_CATEGORIES") {
+            ArraySet(allowedProperties.keys)
+        } else {
+            val filteredKeys = allowedProperties.filterValues { it.categories.contains(category) }.keys
+            ArraySet(filteredKeys)
+        }
         val configs = carPropertyManager.getPropertyList(allowedPropertyIds)
 
         val propertyProfiles = configs.mapNotNull { config ->

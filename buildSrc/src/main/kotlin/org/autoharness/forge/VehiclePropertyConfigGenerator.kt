@@ -30,11 +30,26 @@ object VehiclePropertyConfigGenerator {
     private const val OUTPUT_PROPERTY_NAME = "allowedProperties"
     private const val KEY_LIST_PROPERTIES = "properties"
     private const val KEY_PROPERTY_NAME = "name"
+    private const val KEY_PROPERTY_CATEGORIES = "categories"
     private const val KEY_PROPERTY_DESCRIPTION = "description"
     private const val KEY_PROPERTY_ID = "id"
 
+    private val VALID_CATEGORIES = setOf(
+        "BODY_CONTROL",
+        "HVAC_SYSTEM",
+        "ENERGY_MANAGEMENT",
+        "CHASSIS_AND_DYNAMICS",
+        "LIGHTING_SYSTEM",
+        "VEHICLE_INFO",
+    )
+
     // A private data class to safely hold parsed config data.
-    private data class PropertyDefinition(val name: String, val description: String, val id: Int?)
+    private data class PropertyDefinition(
+        val name: String,
+        val categories: List<String>,
+        val description: String,
+        val id: Int?,
+    )
 
     /**
      * Generates the VehiclePropertyConfig.kt file from a config file.
@@ -55,11 +70,11 @@ object VehiclePropertyConfigGenerator {
         println("Successfully generated ${OUTPUT_CLASS_NAME}.kt in $outDir")
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun parseYaml(inputFile: File): List<PropertyDefinition> {
         val yaml = Yaml()
         val data: Map<String, Any> = inputFile.reader().use { yaml.load(it) }
 
-        @Suppress("UNCHECKED_CAST")
         val propertyMaps = data[KEY_LIST_PROPERTIES] as? List<Map<String, Any>>
             ?: throw IllegalArgumentException("YAML must contain a top-level key '${KEY_LIST_PROPERTIES}' with a list of properties.")
 
@@ -105,12 +120,24 @@ object VehiclePropertyConfigGenerator {
         // Return metadata parsing from the configuration.
         return propertyMaps.map { prop ->
             val name = prop[KEY_PROPERTY_NAME] as String
+            val categories = prop[KEY_PROPERTY_CATEGORIES] as? List<String>
+            if (categories.isNullOrEmpty()) {
+                throw IllegalArgumentException("At least one category is required for property $name.")
+            }
+            val invalidCategories = categories.filter { it !in VALID_CATEGORIES }
+            if (invalidCategories.isNotEmpty()) {
+                throw IllegalArgumentException(
+                    "Property $name contains invalid categories: ${invalidCategories.joinToString(", ")}. " +
+                        "Valid categories are: ${VALID_CATEGORIES.joinToString(", ")}",
+                )
+            }
             val description = prop[KEY_PROPERTY_DESCRIPTION] as String?
             if (description.isNullOrBlank()) {
                 throw IllegalArgumentException("A description is missing for property $name.")
             }
             PropertyDefinition(
                 name = name,
+                categories = categories,
                 description = description,
                 id = prop[KEY_PROPERTY_ID] as Int?,
             )
@@ -145,28 +172,36 @@ object VehiclePropertyConfigGenerator {
             .build()
     }
 
-    private fun buildPropertyDataClass(className: ClassName): TypeSpec = TypeSpec.classBuilder(className)
-        .addModifiers(KModifier.DATA)
-        .primaryConstructor(
-            FunSpec.constructorBuilder()
-                .addParameter(KEY_PROPERTY_NAME, String::class)
-                .addParameter(KEY_PROPERTY_DESCRIPTION, String::class)
-                .addParameter(KEY_PROPERTY_ID, Int::class)
-                .build(),
-        )
-        .addProperty(
-            PropertySpec.builder(KEY_PROPERTY_NAME, String::class)
-                .initializer(KEY_PROPERTY_NAME).build(),
-        )
-        .addProperty(
-            PropertySpec.builder(KEY_PROPERTY_DESCRIPTION, String::class)
-                .initializer(KEY_PROPERTY_DESCRIPTION).build(),
-        )
-        .addProperty(
-            PropertySpec.builder(KEY_PROPERTY_ID, Int::class)
-                .initializer(KEY_PROPERTY_ID).build(),
-        )
-        .build()
+    private fun buildPropertyDataClass(className: ClassName): TypeSpec {
+        val listString = List::class.asTypeName().parameterizedBy(String::class.asTypeName())
+        return TypeSpec.classBuilder(className)
+            .addModifiers(KModifier.DATA)
+            .primaryConstructor(
+                FunSpec.constructorBuilder()
+                    .addParameter(KEY_PROPERTY_NAME, String::class)
+                    .addParameter(KEY_PROPERTY_CATEGORIES, listString)
+                    .addParameter(KEY_PROPERTY_DESCRIPTION, String::class)
+                    .addParameter(KEY_PROPERTY_ID, Int::class)
+                    .build(),
+            )
+            .addProperty(
+                PropertySpec.builder(KEY_PROPERTY_NAME, String::class)
+                    .initializer(KEY_PROPERTY_NAME).build(),
+            )
+            .addProperty(
+                PropertySpec.builder(KEY_PROPERTY_CATEGORIES, listString)
+                    .initializer(KEY_PROPERTY_CATEGORIES).build(),
+            )
+            .addProperty(
+                PropertySpec.builder(KEY_PROPERTY_DESCRIPTION, String::class)
+                    .initializer(KEY_PROPERTY_DESCRIPTION).build(),
+            )
+            .addProperty(
+                PropertySpec.builder(KEY_PROPERTY_ID, Int::class)
+                    .initializer(KEY_PROPERTY_ID).build(),
+            )
+            .build()
+    }
 
     private fun buildPropertyMap(
         properties: List<PropertyDefinition>,
@@ -175,10 +210,18 @@ object VehiclePropertyConfigGenerator {
         val mapEntries = properties.map { prop ->
             val idCode = prop.id?.toString() ?: "VehiclePropertyIds.${prop.name}"
 
+            val categoriesCode = prop.categories.joinToString(
+                prefix = "listOf(",
+                postfix = ")",
+                separator = ", ",
+                transform = { "\"$it\"" },
+            )
+
             val propertyConstructor = CodeBlock.of(
-                "%T(name = %S, description = %S, id = %L)",
+                "%T(name = %S, categories = %L, description = %S, id = %L)",
                 propertyClassName,
                 prop.name,
+                categoriesCode,
                 prop.description,
                 idCode,
             )

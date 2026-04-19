@@ -35,8 +35,10 @@ class VehiclePropertyConfigGeneratorTest {
         val content = """
             properties:
               - name: "INFO_VIN"
+                categories: ["VEHICLE_INFO"]
                 description: "Vehicle Identification Number."
               - name: "CUSTOM_PROPERTY"
+                categories: ["BODY_CONTROL", "HVAC_SYSTEM"]
                 id: 591397123
                 description: "A custom property for feature XYZ"
         """
@@ -48,8 +50,55 @@ class VehiclePropertyConfigGeneratorTest {
         val generatedCode = expectedOutputFile.readText()
         assertTrue("Generated code should contain the object declaration.", generatedCode.contains("object VehiclePropertyConfig"))
         assertTrue("Generated code should contain the allowedProperties map.", generatedCode.contains("public val allowedProperties: Map<Int, Property>"))
-        assertTrue("Generated code should contain the system property.", generatedCode.contains("VehiclePropertyIds.INFO_VIN to Property(name = \"INFO_VIN\""))
-        assertTrue("Generated code should contain the custom property.", generatedCode.contains("591397123 to Property(name = \"CUSTOM_PROPERTY\""))
+        assertTrue("Generated code should contain the system property with categories.", generatedCode.contains("VehiclePropertyIds.INFO_VIN to Property(name = \"INFO_VIN\", categories = listOf(\"VEHICLE_INFO\")"))
+        assertTrue("Generated code should contain the custom property with categories.", generatedCode.contains("591397123 to Property(name = \"CUSTOM_PROPERTY\", categories = listOf(\"BODY_CONTROL\", \"HVAC_SYSTEM\")"))
+    }
+
+    @Test
+    fun `generate() should throw exception when categories is missing`() {
+        val content = """
+            properties:
+              - name: "PROP1"
+                description: "desc 1"
+        """
+        val inputFile = createTestConfig(content)
+
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            VehiclePropertyConfigGenerator.generate(inputFile, tempFolder.root)
+        }
+        assertEquals("At least one category is required for property PROP1.", exception.message)
+    }
+
+    @Test
+    fun `generate() should throw exception when categories is empty`() {
+        val content = """
+            properties:
+              - name: "PROP1"
+                categories: []
+                description: "desc 1"
+        """
+        val inputFile = createTestConfig(content)
+
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            VehiclePropertyConfigGenerator.generate(inputFile, tempFolder.root)
+        }
+        assertEquals("At least one category is required for property PROP1.", exception.message)
+    }
+
+    @Test
+    fun `generate() should throw exception when categories contains invalid value`() {
+        val content = """
+            properties:
+              - name: "PROP1"
+                categories: ["INVALID_CAT"]
+                description: "desc 1"
+        """
+        val inputFile = createTestConfig(content)
+
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            VehiclePropertyConfigGenerator.generate(inputFile, tempFolder.root)
+        }
+        assertTrue(exception.message!!.contains("contains invalid categories: INVALID_CAT"))
     }
 
     @Test
@@ -82,10 +131,13 @@ class VehiclePropertyConfigGeneratorTest {
             properties:
               - name: "DUPLICATE_NAME"
                 description: "desc 1"
+                categories: ["VEHICLE_INFO"]
               - name: "ANOTHER_PROP"
                 description: "desc 2"
+                categories: ["BODY_CONTROL"]
               - name: "DUPLICATE_NAME"
                 description: "desc 3"
+                categories: ["BODY_CONTROL"]
         """
         val inputFile = createTestConfig(yamlContent)
 
@@ -101,9 +153,11 @@ class VehiclePropertyConfigGeneratorTest {
             properties:
               - name: "PROP1"
                 description: "desc 1"
+                categories: ["BODY_CONTROL"]
                 id: 12345
               - name: "PROP2"
                 description: "desc 2"
+                categories: ["BODY_CONTROL"]
                 id: 12345
         """
         val inputFile = createTestConfig(content)
@@ -121,6 +175,7 @@ class VehiclePropertyConfigGeneratorTest {
             properties:
               - name: "INFO_DRIVER_SEAT"
                 description: "Driver's seat location"
+                categories: ["BODY_CONTROL"]
                 id: $systemId
         """
         val inputFile = createTestConfig(yamlContent)
@@ -136,6 +191,7 @@ class VehiclePropertyConfigGeneratorTest {
         val content = """
             properties:
               - description: "This property is missing its name"
+                categories: ["BODY_CONTROL"]
                 id: 999
         """
         val inputFile = createTestConfig(content)
@@ -152,6 +208,7 @@ class VehiclePropertyConfigGeneratorTest {
             properties:
               - name: "CUSTOM"
                 description: " "
+                categories: ["ENERGY_MANAGEMENT"]
                 id: 999
         """
         val inputFile = createTestConfig(content)
