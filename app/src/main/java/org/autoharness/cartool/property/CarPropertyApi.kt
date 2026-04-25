@@ -16,7 +16,7 @@ const val RESULT_SUCCESS = "success"
 interface GetPropertyList {
     fun getPropertyList(
         appFunctionContext: AppFunctionContext,
-        category: String = "ALL_CATEGORIES",
+        category: String? = "ALL_CATEGORIES",
     ): String
 }
 

@@ -42,8 +42,8 @@ class CarPropertyRepository(
 
     private val propertyIdByName: Map<String, Int> = allowedProperties.values.associate { it.name to it.id }
 
-    fun getPropertyList(category: String): String {
-        val allowedPropertyIds = if (category == "ALL_CATEGORIES") {
+    fun getPropertyList(category: String?): String {
+        val allowedPropertyIds = if (category == null || category == "ALL_CATEGORIES") {
             ArraySet(allowedProperties.keys)
         } else {
             val filteredKeys = allowedProperties.filterValues { it.categories.contains(category) }.keys
