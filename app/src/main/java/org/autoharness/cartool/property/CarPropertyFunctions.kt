@@ -75,7 +75,7 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
                 "VEHICLE_INFO",
             ],
         )
-        category: String,
+        category: String?,
     ): String = repository.getPropertyList(category)
 
     /**
