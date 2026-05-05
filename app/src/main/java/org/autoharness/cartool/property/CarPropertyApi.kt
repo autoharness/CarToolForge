@@ -45,7 +45,7 @@ interface GetBooleanProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): Boolean
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setBooleanProperty", version = 1, category = "car-property-full")
@@ -64,7 +64,7 @@ interface GetIntProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): Int
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setIntProperty", version = 1, category = "car-property-full")
@@ -83,7 +83,7 @@ interface GetIntArrayProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): IntArray
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setIntArrayProperty", version = 1, category = "car-property-full")
@@ -102,7 +102,7 @@ interface GetLongProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): Long
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setLongProperty", version = 1, category = "car-property-full")
@@ -121,7 +121,7 @@ interface GetLongArrayProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): LongArray
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setLongArrayProperty", version = 1, category = "car-property-full")
@@ -140,7 +140,7 @@ interface GetFloatProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): Float
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setFloatProperty", version = 1, category = "car-property-full")
@@ -159,7 +159,7 @@ interface GetFloatArrayProperty {
         appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
-    ): FloatArray
+    ): String
 }
 
 @AppFunctionSchemaDefinition(name = "setFloatArrayProperty", version = 1, category = "car-property-full")
