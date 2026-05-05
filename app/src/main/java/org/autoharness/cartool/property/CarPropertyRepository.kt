@@ -27,6 +27,8 @@ import org.autoharness.cartool.property.Constants.SUPPORTED_CHANGE_MODE_MAP
 import org.autoharness.cartool.property.Constants.SUPPORTED_DATA_TYPE_MAP
 import org.autoharness.cartool.property.data.AreaIdProfile
 import org.autoharness.cartool.property.data.CarPropertyProfile
+import org.autoharness.cartool.property.data.PropertyActionResult
+import org.autoharness.cartool.property.data.PropertyValueResult
 
 /**
  * A class that acts as a facade for the [CarPropertyManager].
@@ -62,13 +64,14 @@ class CarPropertyRepository(
         return Json.encodeToString(propertyProfiles)
     }
 
-    private inline fun <T> getProperty(
+    private inline fun <reified T> getProperty(
         propertyName: String,
         areaId: Int,
         block: (Int, Int) -> T,
-    ): T {
+    ): String {
         val propertyId = getPropertyIdIfAvailable(propertyName, areaId)
-        return block(propertyId, areaId)
+        val value = block(propertyId, areaId)
+        return Json.encodeToString(PropertyValueResult(propertyName, areaId, value))
     }
 
     private inline fun <T> setProperty(
@@ -76,9 +79,14 @@ class CarPropertyRepository(
         areaId: Int,
         value: T,
         block: (Int, Int, T) -> Unit,
-    ) {
+    ): String {
         val propertyId = getPropertyIdIfAvailable(propertyName)
-        block(propertyId, areaId, value)
+        return try {
+            block(propertyId, areaId, value)
+            Json.encodeToString(PropertyActionResult(propertyName, areaId, RESULT_SUCCESS))
+        } catch (e: Exception) {
+            Json.encodeToString(PropertyActionResult(propertyName, areaId, e.message ?: "Unknown error"))
+        }
     }
 
     fun getStringProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
@@ -93,7 +101,7 @@ class CarPropertyRepository(
         carPropertyManager.setProperty(String::class.java, pid, aid, v)
     }
 
-    fun getBooleanProperty(propertyName: String, areaId: Int): Boolean = getProperty(propertyName, areaId) { pid, aid ->
+    fun getBooleanProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getBooleanProperty(pid, aid)
     }
 
@@ -101,7 +109,7 @@ class CarPropertyRepository(
         carPropertyManager.setBooleanProperty(pid, aid, v)
     }
 
-    fun getIntProperty(propertyName: String, areaId: Int): Int = getProperty(propertyName, areaId) { pid, aid ->
+    fun getIntProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getIntProperty(pid, aid)
     }
 
@@ -109,7 +117,7 @@ class CarPropertyRepository(
         carPropertyManager.setIntProperty(pid, aid, v)
     }
 
-    fun getIntArrayProperty(propertyName: String, areaId: Int): IntArray = getProperty(propertyName, areaId) { pid, aid ->
+    fun getIntArrayProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getIntArrayProperty(pid, aid)
     }
 
@@ -117,7 +125,7 @@ class CarPropertyRepository(
         carPropertyManager.setProperty(Array<Int>::class.java, pid, aid, v.toTypedArray())
     }
 
-    fun getLongProperty(propertyName: String, areaId: Int): Long = getProperty(propertyName, areaId) { pid, aid ->
+    fun getLongProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getProperty(java.lang.Long::class.java, pid, aid)?.value?.toLong()
             ?: 0L
     }
@@ -126,7 +134,7 @@ class CarPropertyRepository(
         carPropertyManager.setProperty(Long::class.java, pid, aid, v)
     }
 
-    fun getLongArrayProperty(propertyName: String, areaId: Int): LongArray = getProperty(propertyName, areaId) { pid, aid ->
+    fun getLongArrayProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getProperty(Array<Long>::class.java, pid, aid)?.value?.toLongArray()
             ?: LongArray(0)
     }
@@ -135,7 +143,7 @@ class CarPropertyRepository(
         carPropertyManager.setProperty(Array<Long>::class.java, pid, aid, v.toTypedArray())
     }
 
-    fun getFloatProperty(propertyName: String, areaId: Int): Float = getProperty(propertyName, areaId) { pid, aid ->
+    fun getFloatProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getFloatProperty(pid, aid)
     }
 
@@ -143,7 +151,7 @@ class CarPropertyRepository(
         carPropertyManager.setFloatProperty(pid, aid, v)
     }
 
-    fun getFloatArrayProperty(propertyName: String, areaId: Int): FloatArray = getProperty(propertyName, areaId) { pid, aid ->
+    fun getFloatArrayProperty(propertyName: String, areaId: Int): String = getProperty(propertyName, areaId) { pid, aid ->
         carPropertyManager.getProperty(
             Array<Float>::class.java,
             pid,
@@ -264,7 +272,7 @@ class CarPropertyRepository(
             ?: throw AppFunctionInvalidArgumentException("Property '$propertyName' does not exist or is not authorized")
 
         if (areaId != null && !isPropertyAvailable(propertyId, areaId)) {
-            throw AppFunctionInvalidArgumentException("Property '$propertyName' is currently not available")
+            throw AppFunctionInvalidArgumentException("Property '$propertyName' (area: $areaId) is currently not available")
         }
         return propertyId
     }

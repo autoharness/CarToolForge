@@ -22,6 +22,7 @@ import kotlinx.serialization.json.Json
 import org.autoharness.cartool.VehiclePropertyConfig
 import org.autoharness.cartool.property.Constants.AREA_ID_MASKS
 import org.autoharness.cartool.property.data.CarPropertyProfile
+import org.autoharness.cartool.property.data.PropertyValueResult
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -643,9 +644,20 @@ class CarPropertyRepositoryTest {
         whenever(mockCarPropertyManager.getFloatProperty(testPropId, testAreaId))
             .thenReturn(123.45f)
 
-        assertEquals(true, carPropertyRepository.getBooleanProperty(testPropName, testAreaId))
-        assertEquals(123, carPropertyRepository.getIntProperty(testPropName, testAreaId))
-        assertEquals(123.45f, carPropertyRepository.getFloatProperty(testPropName, testAreaId))
+        val boolResult = Json.decodeFromString<PropertyValueResult<Boolean>>(carPropertyRepository.getBooleanProperty(testPropName, testAreaId))
+        assertEquals(true, boolResult.value)
+        assertEquals(testPropName, boolResult.propertyName)
+        assertEquals(testAreaId, boolResult.areaId)
+
+        val intResult = Json.decodeFromString<PropertyValueResult<Int>>(carPropertyRepository.getIntProperty(testPropName, testAreaId))
+        assertEquals(123, intResult.value)
+        assertEquals(testPropName, intResult.propertyName)
+        assertEquals(testAreaId, intResult.areaId)
+
+        val floatResult = Json.decodeFromString<PropertyValueResult<Float>>(carPropertyRepository.getFloatProperty(testPropName, testAreaId))
+        assertEquals(123.45f, floatResult.value)
+        assertEquals(testPropName, floatResult.propertyName)
+        assertEquals(testAreaId, floatResult.areaId)
     }
 
     @Test
@@ -661,10 +673,17 @@ class CarPropertyRepositoryTest {
         whenever(mockCarPropertyManager.isPropertyAvailable(testPropId, testAreaId)).thenReturn(true)
         whenever(mockCarPropertyManager.getProperty(any<Class<*>>(), eq(testPropId), eq(testAreaId))).thenReturn(null)
 
-        assertEquals("", carPropertyRepository.getStringProperty(testPropName, testAreaId))
-        assertEquals(0L, carPropertyRepository.getLongProperty(testPropName, testAreaId))
-        assertArrayEquals(longArrayOf(), carPropertyRepository.getLongArrayProperty(testPropName, testAreaId))
-        assertArrayEquals(floatArrayOf(), carPropertyRepository.getFloatArrayProperty(testPropName, testAreaId), 0.0f)
+        val stringResult = Json.decodeFromString<PropertyValueResult<String>>(carPropertyRepository.getStringProperty(testPropName, testAreaId))
+        assertEquals("", stringResult.value)
+
+        val longResult = Json.decodeFromString<PropertyValueResult<Long>>(carPropertyRepository.getLongProperty(testPropName, testAreaId))
+        assertEquals(0L, longResult.value)
+
+        val longArrayResult = Json.decodeFromString<PropertyValueResult<LongArray>>(carPropertyRepository.getLongArrayProperty(testPropName, testAreaId))
+        assertArrayEquals(longArrayOf(), longArrayResult.value)
+
+        val floatArrayResult = Json.decodeFromString<PropertyValueResult<FloatArray>>(carPropertyRepository.getFloatArrayProperty(testPropName, testAreaId))
+        assertArrayEquals(floatArrayOf(), floatArrayResult.value, 0.0f)
     }
 
     @Test
