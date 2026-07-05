@@ -1,0 +1,14 @@
+android_app {
+    name: "CarToolForgeStubAllowlistService",
+    srcs: ["src/**/*.java"],
+    platform_apis: true,
+    certificate: "platform",
+    privileged: true,
+}
+
+runtime_resource_overlay {
+    name: "CarToolForgeStubAllowlistServiceOverlay",
+    resource_dirs: ["overlay/res"],
+    manifest: "overlay/AndroidManifest.xml",
+    sdk_version: "current",
+}

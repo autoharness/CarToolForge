@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The package name of the allowlist provider service -->
+    <string name="config_allowlistProviderServicePackage" translatable="false">org.autoharness.cartool.stuballowlist</string>
+</resources>

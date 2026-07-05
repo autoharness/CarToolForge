@@ -4,18 +4,30 @@ Follow these steps to integrate:
 
 1. Copy the current directory (`cartoolforge`) to the path `$ANDROID_BUILD_TOP/vendor/autoharness/packages/apps`.
 
-   > [!NOTE]
-   >
-   > The path can be adjusted according to your project's source code organization; the one provided here is for example purposes only.
+> [!NOTE]
+>
+> The path can be adjusted according to your project's source code organization; the one provided here is for example purposes only.
 
 2. To ensure the application is included in your system image, add `CarToolForgePrebuilt` to the `PRODUCT_PACKAGES` variable in your target product's makefile.
 
-   For example, you would add the following to `$ANDROID_BUILD_TOP/packages/services/Car/car_product/car_system.mk`:
+   For example, you would add the following to `$ANDROID_BUILD_TOP/packages/services/Car/car_product/build/car_product.mk`:
 
    ```
    PRODUCT_PACKAGES += \
        CarToolForgePrebuilt \
    ```
+
+   For Android 17+, if you need to debug allowlist and permissions, you can also add `CarToolForgeStubAllowlistService` and `CarToolForgeStubAllowlistServiceOverlay` to the list:
+
+   ```
+   PRODUCT_PACKAGES += \
+       CarToolForgeStubAllowlistService \
+       CarToolForgeStubAllowlistServiceOverlay \
+   ```
+
+> [!NOTE]
+>
+> `CarToolForgeStubAllowlistService` and `CarToolForgeStubAllowlistServiceOverlay` are provided for reference and debugging purposes only. Do not include them in final production builds.
 
 3. Compile the system image. Build the AOSP source code from the root directory:
 
@@ -23,9 +35,9 @@ Follow these steps to integrate:
    source build/envsetup.sh && lunch <your_target_product> && m -j$(nproc)
    ```
 
-   > [!NOTE]
-   >
-   > In the command above, replace `<your_target_product>` with the actual target for your build product (e.g., `sdk_car_x86_64-aosp_current-userdebug`).
+> [!NOTE]
+>
+> In the command above, replace `<your_target_product>` with the actual target for your build product (e.g., `sdk_car_x86_64-aosp_current-userdebug`).
 
    After the build completes, verify that the `CarToolForgePrebuilt` directory and its APK are located in the output directory: `$ANDROID_PRODUCT_OUT/system/priv-app/`.
 

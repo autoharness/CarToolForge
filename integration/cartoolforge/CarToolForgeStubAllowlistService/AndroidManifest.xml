@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.autoharness.cartool.stuballowlist">
+
+    <application android:label="CarToolForgeStubAllowlistService">
+        <service
+            android:name=".CarToolForgeStubAllowlistService"
+            android:permission="android.permission.BIND_ALLOWLIST_PROVIDER_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.os.allowlist.action.ALLOWLIST_PROVIDER" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
