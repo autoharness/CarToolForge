@@ -1,8 +1,8 @@
 [versions]
-agp = "8.10.1"
+agp = "9.2.1"
 androidGitVersion = "0.4.14"
-kotlin = "2.1.21"
-coreKtx = "1.12.0"
+kotlin = "2.3.21"
+coreKtx = "1.18.0"
 androidxAnnotation = "1.1.0"
 junit = "4.13.2"
 mockitoCore = "5.12.0"
@@ -15,8 +15,8 @@ kotlinPoet = "2.2.0"
 kotlinxSerializationJson = "1.8.1"
 kotlinxSerializationPlugin = "2.2.0"
 spotless = "7.1.0"
-appfunctions = "1.0.0-alpha08"
-ksp = "2.1.21-2.0.1"
+appfunctions = "1.0.0-alpha09"
+ksp = "2.3.6"
 guavaAndroid = "33.4.8-android"
 
 [libraries]
@@ -38,7 +38,6 @@ guava-android = { group = "com.google.guava", name = "guava", version.ref = "gua
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinxSerializationPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-library = { id = "com.android.library", version.ref = "agp" }

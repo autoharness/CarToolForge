@@ -1,13 +1,12 @@
+import org.autoharness.forge.VehiclePropertyConfigGenerator
 import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.android.git.version)
 }
-apply(from = "code-generation.gradle.kts")
 apply(from = "../deliver.gradle")
 
 androidGitVersion {
@@ -18,12 +17,14 @@ androidGitVersion {
 
 android {
     namespace = "org.autoharness.cartool"
-    compileSdk = 36
+    compileSdk {
+        version = release(37)
+    }
 
     defaultConfig {
         applicationId = "org.autoharness.cartool"
         minSdk = 36
-        targetSdk = 36
+        targetSdk = 37
         versionCode = if (androidGitVersion.code() == 0) 1 else androidGitVersion.code()
         versionName = androidGitVersion.name()
 
@@ -85,21 +86,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    sourceSets {
-        getByName("main") {
-            java.srcDir(
-                layout.buildDirectory
-                    .dir("generated/source/kotlin/main")
-                    .get()
-                    .asFile,
-            )
-        }
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -123,4 +111,38 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.robolectric)
+}
+
+/** Vehicle property config generation */
+abstract class GenerateCodeTask : DefaultTask() {
+    @get:InputFile
+    abstract val configInput: RegularFileProperty
+
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun generate() {
+        VehiclePropertyConfigGenerator.generate(
+            input = configInput.get().asFile,
+            outDir = outputDir.get().asFile,
+        )
+    }
+}
+
+val generateCodeFromConfig =
+    tasks.register<GenerateCodeTask>("generateCodeFromConfig") {
+        group = "build"
+        description = "Generates kotlin code from the config file."
+        configInput.set(rootProject.file("config/vehicle_properties.yaml"))
+        outputDir.set(layout.buildDirectory.dir("generated/source/kotlin/main"))
+    }
+
+androidComponents {
+    onVariants { variant ->
+        variant.sources.java?.addGeneratedSourceDirectory(
+            generateCodeFromConfig,
+            GenerateCodeTask::outputDir,
+        )
+    }
 }

@@ -1,45 +1,72 @@
-project.afterEvaluate {
-    tasks.register("createDeliverables") {
-        group("Release")
-        description("Creates the deliverables for the CarToolForge app.")
+def androidComponents = project.extensions.findByName("androidComponents")
+if (androidComponents != null) {
+    def mainTask = tasks.register("createDeliverables") {
+        group = "Release"
+        description = "Creates the deliverables for the CarToolForge app."
+    }
 
-        def outputsRoot = "../build/integration/outputs_to_release/"
+    androidComponents.onVariants(androidComponents.selector().all()) { variant ->
+        def variantName = variant.name
+        def buildTypeName = variant.buildType
+        
+        variant.outputs.each { output ->
+            def taskName = "createDeliverablesFor${variantName.capitalize()}"
+            
+            def apkArtifactClass = variant.class.classLoader.loadClass('com.android.build.api.artifact.SingleArtifact$APK')
+            def apkArtifact = apkArtifactClass.getField("INSTANCE").get(null)
+            def apkFolderProvider = variant.artifacts.get(apkArtifact)
+            
+            def variantTask = tasks.register(taskName) {
+                group = "Release"
+                description = "Creates the deliverables for the CarToolForge app (${variantName})."
+                
+                inputs.files(apkFolderProvider)
+                
+                doLast {
+                    def versionCode = output.versionCode.orNull ?: 1
+                    def versionName = output.versionName.orNull ?: "1.0"
+                    def apkFolder = apkFolderProvider.get().asFile
+                    def apkFiles = apkFolder.listFiles().findAll { it.name.endsWith(".apk") }
+                    if (apkFiles.isEmpty()) {
+                        logger.warn("Skip ($variantName). APK not found in: ${apkFolder.path}")
+                        return
+                    }
+                    
+                    def outputsRoot = "../build/integration/outputs_to_release/"
+                    def outDirName = "cartoolforge-$buildTypeName-$versionCode-$versionName"
+                    def outDirPath = outputsRoot + outDirName + "/cartoolforge"
 
-        android.applicationVariants.configureEach { variant ->
-            def buildTypeName = variant.buildType.name
-            def apkFileDir = "build/outputs/apk/$buildTypeName/"
-            def apkFilename = "${project.name}-${buildTypeName}.apk"
-            def sourceApkFile = file("$apkFileDir/$apkFilename")
-            if (!sourceApkFile.isFile()) {
-                logger.warn("Skip ($buildTypeName). APK not found at: ${sourceApkFile.path}")
-                return // continue
+                    logger.info("Start packing $outDirName")
+                    mkdir outDirPath
+                    copy {
+                        from "../integration/cartoolforge"
+                        into outDirPath
+                    }
+                    
+                    // Copy APK files
+                    apkFiles.each { apkFile ->
+                        copy {
+                            from apkFile.parentFile
+                            into outDirPath
+                            include apkFile.name
+                            rename apkFile.name, "CarToolForge.apk"
+                        }
+                    }
+                    
+                    copy {
+                        from "../LICENSE"
+                        into outDirPath
+                    }
+                    ant.zip(
+                            destfile: "$outputsRoot/${outDirName}.zip",
+                            basedir: outputsRoot,
+                            includes: "${outDirName}/**"
+                    )
+                }
             }
-
-            variant.outputs.each {
-                def outDirName = "cartoolforge-$buildTypeName-$versionCode-$versionName"
-                def outDirPath = outputsRoot + outDirName + "/cartoolforge"
-
-                logger.info("Start packing $outDirName")
-                mkdir outDirPath
-                copy {
-                    from "../integration/cartoolforge"
-                    into outDirPath
-                }
-                copy {
-                    from "$apkFileDir"
-                    into "$outDirPath"
-                    include "$apkFilename"
-                    rename "$apkFilename", "CarToolForge.apk"
-                }
-                copy {
-                    from "../LICENSE"
-                    into "$outDirPath"
-                }
-                ant.zip(
-                        destfile: "$outputsRoot/${outDirName}.zip",
-                        basedir: outputsRoot,
-                        includes: "${outDirName}/**"
-                )
+            
+            mainTask.configure {
+                dependsOn(variantTask)
             }
         }
     }
