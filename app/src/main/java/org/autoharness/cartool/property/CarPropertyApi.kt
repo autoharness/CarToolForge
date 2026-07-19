@@ -7,7 +7,6 @@
  */
 package org.autoharness.cartool.property
 
-import androidx.appfunctions.AppFunctionContext
 import androidx.appfunctions.AppFunctionSchemaDefinition
 
 const val RESULT_SUCCESS = "success"
@@ -15,7 +14,6 @@ const val RESULT_SUCCESS = "success"
 @AppFunctionSchemaDefinition(name = "getPropertyList", version = 1, category = "car-property-full")
 interface GetPropertyList {
     fun getPropertyList(
-        appFunctionContext: AppFunctionContext,
         category: String? = "ALL_CATEGORIES",
     ): String
 }
@@ -23,7 +21,6 @@ interface GetPropertyList {
 @AppFunctionSchemaDefinition(name = "getStringProperty", version = 1, category = "car-property-full")
 interface GetStringProperty {
     fun getStringProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -32,7 +29,6 @@ interface GetStringProperty {
 @AppFunctionSchemaDefinition(name = "setStringProperty", version = 1, category = "car-property-full")
 interface SetStringProperty {
     fun setStringProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: String,
@@ -42,7 +38,6 @@ interface SetStringProperty {
 @AppFunctionSchemaDefinition(name = "getBooleanProperty", version = 1, category = "car-property-full")
 interface GetBooleanProperty {
     fun getBooleanProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -51,7 +46,6 @@ interface GetBooleanProperty {
 @AppFunctionSchemaDefinition(name = "setBooleanProperty", version = 1, category = "car-property-full")
 interface SetBooleanProperty {
     fun setBooleanProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Boolean,
@@ -61,7 +55,6 @@ interface SetBooleanProperty {
 @AppFunctionSchemaDefinition(name = "getIntProperty", version = 1, category = "car-property-full")
 interface GetIntProperty {
     fun getIntProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -70,7 +63,6 @@ interface GetIntProperty {
 @AppFunctionSchemaDefinition(name = "setIntProperty", version = 1, category = "car-property-full")
 interface SetIntProperty {
     fun setIntProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Int,
@@ -80,7 +72,6 @@ interface SetIntProperty {
 @AppFunctionSchemaDefinition(name = "getIntArrayProperty", version = 1, category = "car-property-full")
 interface GetIntArrayProperty {
     fun getIntArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -89,7 +80,6 @@ interface GetIntArrayProperty {
 @AppFunctionSchemaDefinition(name = "setIntArrayProperty", version = 1, category = "car-property-full")
 interface SetIntArrayProperty {
     fun setIntArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: IntArray,
@@ -99,7 +89,6 @@ interface SetIntArrayProperty {
 @AppFunctionSchemaDefinition(name = "getLongProperty", version = 1, category = "car-property-full")
 interface GetLongProperty {
     fun getLongProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -108,7 +97,6 @@ interface GetLongProperty {
 @AppFunctionSchemaDefinition(name = "setLongProperty", version = 1, category = "car-property-full")
 interface SetLongProperty {
     fun setLongProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Long,
@@ -118,7 +106,6 @@ interface SetLongProperty {
 @AppFunctionSchemaDefinition(name = "getLongArrayProperty", version = 1, category = "car-property-full")
 interface GetLongArrayProperty {
     fun getLongArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -127,7 +114,6 @@ interface GetLongArrayProperty {
 @AppFunctionSchemaDefinition(name = "setLongArrayProperty", version = 1, category = "car-property-full")
 interface SetLongArrayProperty {
     fun setLongArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: LongArray,
@@ -137,7 +123,6 @@ interface SetLongArrayProperty {
 @AppFunctionSchemaDefinition(name = "getFloatProperty", version = 1, category = "car-property-full")
 interface GetFloatProperty {
     fun getFloatProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -146,7 +131,6 @@ interface GetFloatProperty {
 @AppFunctionSchemaDefinition(name = "setFloatProperty", version = 1, category = "car-property-full")
 interface SetFloatProperty {
     fun setFloatProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Float,
@@ -156,7 +140,6 @@ interface SetFloatProperty {
 @AppFunctionSchemaDefinition(name = "getFloatArrayProperty", version = 1, category = "car-property-full")
 interface GetFloatArrayProperty {
     fun getFloatArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String
@@ -165,7 +148,6 @@ interface GetFloatArrayProperty {
 @AppFunctionSchemaDefinition(name = "setFloatArrayProperty", version = 1, category = "car-property-full")
 interface SetFloatArrayProperty {
     fun setFloatArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: FloatArray,

@@ -7,11 +7,18 @@
  */
 package org.autoharness.cartool.property
 
-import androidx.appfunctions.AppFunctionContext
+import androidx.appfunctions.AppFunction
+import androidx.appfunctions.AppFunctionService
+import androidx.appfunctions.AppFunctionServiceEntryPoint
 import androidx.appfunctions.AppFunctionStringValueConstraint
-import androidx.appfunctions.service.AppFunction
+import org.autoharness.cartool.CarToolApplication
 
-class CarPropertyFunctions(private val repository: CarPropertyRepository) :
+@AppFunctionServiceEntryPoint(
+    serviceName = "CarPropertyFunctionsService",
+    appFunctionXmlFileName = "car_property_functions_service",
+)
+abstract class BaseCarPropertyFunctionsService :
+    AppFunctionService(),
     GetPropertyList,
     GetStringProperty,
     SetStringProperty,
@@ -29,6 +36,10 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
     SetFloatProperty,
     GetFloatArrayProperty,
     SetFloatArrayProperty {
+
+    private val repository: CarPropertyRepository
+        get() = (applicationContext as CarToolApplication).carPropertyRepository
+            ?: throw IllegalStateException("CarPropertyRepository is not initialized yet (Car service connection pending)")
 
     /**
      * A list of supported vehicle properties, formatted as a JSON string.
@@ -63,7 +74,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getPropertyList(
-        appFunctionContext: AppFunctionContext,
         @AppFunctionStringValueConstraint(
             enumValues = [
                 "ALL_CATEGORIES",
@@ -87,7 +97,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getStringProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getStringProperty(propertyName, areaId)
@@ -102,7 +111,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setStringProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: String,
@@ -117,7 +125,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getBooleanProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getBooleanProperty(propertyName, areaId)
@@ -132,7 +139,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setBooleanProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Boolean,
@@ -147,7 +153,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getIntProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getIntProperty(propertyName, areaId)
@@ -162,7 +167,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setIntProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Int,
@@ -177,7 +181,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getIntArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getIntArrayProperty(propertyName, areaId)
@@ -192,7 +195,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setIntArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: IntArray,
@@ -207,7 +209,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getLongProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getLongProperty(propertyName, areaId)
@@ -222,7 +223,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setLongProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Long,
@@ -237,7 +237,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getLongArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getLongArrayProperty(propertyName, areaId)
@@ -252,7 +251,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setLongArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: LongArray,
@@ -267,7 +265,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getFloatProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getFloatProperty(propertyName, areaId)
@@ -282,7 +279,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setFloatProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: Float,
@@ -297,7 +293,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun getFloatArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
     ): String = repository.getFloatArrayProperty(propertyName, areaId)
@@ -312,7 +307,6 @@ class CarPropertyFunctions(private val repository: CarPropertyRepository) :
      */
     @AppFunction(isDescribedByKDoc = true)
     override fun setFloatArrayProperty(
-        appFunctionContext: AppFunctionContext,
         propertyName: String,
         areaId: Int,
         value: FloatArray,
