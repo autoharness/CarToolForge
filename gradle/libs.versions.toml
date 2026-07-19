@@ -1,7 +1,6 @@
 [versions]
 agp = "9.2.1"
 androidGitVersion = "0.4.14"
-kotlin = "2.3.21"
 coreKtx = "1.18.0"
 androidxAnnotation = "1.1.0"
 junit = "4.13.2"
@@ -15,7 +14,7 @@ kotlinPoet = "2.2.0"
 kotlinxSerializationJson = "1.8.1"
 kotlinxSerializationPlugin = "2.2.0"
 spotless = "7.1.0"
-appfunctions = "1.0.0-alpha09"
+appfunctions = "1.0.0-alpha10"
 ksp = "2.3.6"
 guavaAndroid = "33.4.8-android"
 
@@ -32,7 +31,6 @@ yaml-snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeY
 squareup-kotlinpoet = { group = "com.squareup", name = "kotlinpoet", version.ref = "kotlinPoet" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 appfunctions = { group = "androidx.appfunctions", name = "appfunctions", version.ref = "appfunctions" }
-appfunctions-service = { group = "androidx.appfunctions", name = "appfunctions-service", version.ref = "appfunctions" }
 appfunctions-compiler = { group = "androidx.appfunctions", name = "appfunctions-compiler", version.ref = "appfunctions" }
 guava-android = { group = "com.google.guava", name = "guava", version.ref = "guavaAndroid" }
 

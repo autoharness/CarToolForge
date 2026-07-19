@@ -103,7 +103,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.appfunctions)
-    implementation(libs.appfunctions.service)
     ksp(libs.appfunctions.compiler)
     implementation(libs.guava.android)
     implementation(project(":CarLibSystemPackage"))

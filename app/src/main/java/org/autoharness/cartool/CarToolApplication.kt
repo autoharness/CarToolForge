@@ -11,38 +11,30 @@ import android.app.Application
 import android.car.Car
 import android.car.hardware.property.CarPropertyManager
 import android.util.Log
-import androidx.appfunctions.service.AppFunctionConfiguration
-import org.autoharness.cartool.property.CarPropertyFunctions
 import org.autoharness.cartool.property.CarPropertyRepository
 
-class CarToolApplication :
-    Application(),
-    AppFunctionConfiguration.Provider {
+class CarToolApplication : Application() {
     companion object {
         private const val TAG = "CarToolApplication"
     }
 
     private lateinit var car: Car
     private lateinit var carPropertyManager: CarPropertyManager
+
+    @Volatile
+    var carPropertyRepository: CarPropertyRepository? = null
+        private set
+
     private val carServiceLifecycleListener: Car.CarServiceLifecycleListener =
         Car.CarServiceLifecycleListener { car, ready ->
             if (ready) {
                 carPropertyManager = car.getCarManager(Car.PROPERTY_SERVICE) as CarPropertyManager
+                carPropertyRepository = CarPropertyRepository(carPropertyManager)
             } else {
                 Log.e(TAG, "Car service is killed")
+                carPropertyRepository = null
             }
         }
-
-    private val carPropertyFunctionsSingleton: CarPropertyFunctions by lazy {
-        CarPropertyFunctions(CarPropertyRepository(carPropertyManager))
-    }
-
-    override val appFunctionConfiguration: AppFunctionConfiguration
-        get() = AppFunctionConfiguration.Builder()
-            .addEnclosingClassFactory(CarPropertyFunctions::class.java) {
-                carPropertyFunctionsSingleton
-            }
-            .build()
 
     override fun onCreate() {
         super.onCreate()
